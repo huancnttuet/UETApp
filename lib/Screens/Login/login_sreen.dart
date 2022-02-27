@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uet_app/Screens/Home/home_screen.dart';
 import 'package:uet_app/Screens/login/components/body.dart';
 
@@ -19,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
 
   postRequest(String username, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _isLoading = true;
     });
@@ -39,7 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
         var resData = json.decode(response.body);
         print(resData['statusCode']);
         if (resData['statusCode'] == 200) {
+          prefs.setString('token', resData['data'].toString());
+
           BottomToast.showToast(context, "Đăng nhập thành công");
+
           Navigator.push(
             context,
             MaterialPageRoute(
