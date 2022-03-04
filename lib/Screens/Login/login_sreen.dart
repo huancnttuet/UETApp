@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    var url = 'http://huaan.live:8000/users/signin';
+    var url = 'http://40.71.102.64:8000/users/signin';
 
     Map data = {
       "data": {"username": username, "pwd": password}
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         var resData = json.decode(response.body);
         print(resData['statusCode']);
-        if (resData['statusCode'] == 200) {
+        if (resData['status'] == 'Success') {
           prefs.setString('token', resData['data'].toString());
 
           BottomToast.showToast(context, "Đăng nhập thành công");

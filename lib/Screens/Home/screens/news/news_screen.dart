@@ -65,7 +65,7 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       _isLoading = true;
     });
-    var url = 'http://huaan.live:5000/news/getnewsfeed';
+    var url = 'http://40.71.102.64:5000/news/getnewsfeed';
 
     try {
       var response = await http
@@ -102,13 +102,13 @@ class _NewsScreenState extends State<NewsScreen> {
     setState(() {
       _isLoading = true;
     });
-    var url = 'http://huaan.live:5000/news/getstudentnews';
+    var url = 'http://40.71.102.64:5000/news/getstudentnews?page=1';
 
     try {
       var response = await http
           .get(Uri.parse(url), headers: {"Content-Type": "application/json"});
-      // print("${response.statusCode}");
-      // print("${response.body}");
+      print("${response.statusCode}");
+      print("${response.body}");
 
       if (response.statusCode == 200) {
         var resData = json.decode(response.body);
@@ -159,7 +159,7 @@ class _NewsScreenState extends State<NewsScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top:25.0,bottom: 25),
               child: Text(
                 'Hoạt động tiêu biểu',
                 style: TextStyle(fontSize: 25),
@@ -186,7 +186,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       }),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 25.0),
               child: Text(
                 'Tin sinh viên',
                 style: TextStyle(fontSize: 25),

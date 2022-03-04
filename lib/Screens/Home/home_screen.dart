@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, value, Widget child) {
             switch (value.currentScreen) {
               case 1:
-                return NewsScreen();
+                return Body();
               case 2:
                 return GradesScreen();
               case 3:

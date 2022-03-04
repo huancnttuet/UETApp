@@ -19,7 +19,7 @@ class _GradesScreenState extends State<GradesScreen> {
   bool _isLoading = false;
   List<dynamic> subjects = [];
   List<dynamic> subjectsTemp = [];
-  List<dynamic> subjectsDisplay = [];
+ 
   int display_number = 10;
   List<dynamic> list_hint = [];
   SharedPreferences pref;
@@ -38,9 +38,6 @@ class _GradesScreenState extends State<GradesScreen> {
         setState(() {
           subjects = cachedData;
           subjectsTemp = cachedData;
-          subjectsDisplay = subjects.length > display_number
-              ? subjects.sublist(0, display_number)
-              : subjects;
           _isLoading = false;
         });
         return true;
@@ -71,9 +68,7 @@ class _GradesScreenState extends State<GradesScreen> {
 
       setState(() {
         subjects = resData['subject_list'];
-        subjectsDisplay = subjects.length > display_number
-            ? subjects.sublist(0, display_number)
-            : subjects;
+     
         pref.setString('grades_all', json.encode((resData['subject_list'])));
       });
     } on Exception catch (_) {
@@ -111,9 +106,6 @@ class _GradesScreenState extends State<GradesScreen> {
         subjectsTemp.where(((e) => e[0].contains(text))).toList();
     setState(() {
       subjects = results;
-      subjectsDisplay = subjects.length > display_number
-          ? subjects.sublist(0, display_number)
-          : subjects;
     });
   }
 
@@ -183,27 +175,27 @@ class _GradesScreenState extends State<GradesScreen> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: subjectsDisplay.length + 1,
+                      itemCount: subjects.length > 50 ? 50 : subjects.length,
                       itemBuilder: (context, index) {
-                        if (index >= subjectsDisplay.length) {
-                          // setState(() {
-                          //   display_number += 10;
-                          //   subjectsDisplay = subjects.length > display_number
-                          //       ? subjects.sublist(0, display_number)
-                          //       : subjects;
-                          // });
-                          return Center(child: CircularProgressIndicator());
-                        }
+                        // if (index >= subjectsDisplay.length) {
+                        //   setState(() {
+                        //     display_number += 10;
+                        //     subjectsDisplay = subjects.length > display_number
+                        //         ? subjects.sublist(0, display_number)
+                        //         : subjects;
+                        //   });
+                        //   return Center(child: CircularProgressIndicator());
+                        // }
                         return GestureDetector(
                           onTap: () {
-                            LauchUrl.lauchPDFUrl(subjectsDisplay[index][2]);
+                            LauchUrl.lauchPDFUrl(subjects[index][2]);
                           },
                           child: Card(
                             child: ListTile(
-                              leading: Text(subjectsDisplay[index][1]),
-                              title: Text(subjectsDisplay[index][0]),
-                              subtitle: Text(subjectsDisplay[index][3] != null
-                                  ? subjectsDisplay[index][3]
+                              leading: Text(subjects[index][1]),
+                              title: Text(subjects[index][0]),
+                              subtitle: Text(subjects[index][3] != null
+                                  ? subjects[index][3]
                                   : 'Chưa có điểm'),
                               // isThreeLine: true,
                             ),

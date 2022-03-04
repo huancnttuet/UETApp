@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uet_app/Screens/Home/screens/news/news_screen.dart';
+import 'package:uet_app/Screens/Login/login_sreen.dart';
+import 'package:uet_app/components/Dialog/alert_dialog.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -27,20 +30,35 @@ class Body extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Align(
-                  alignment: Alignment.topRight,
-                  child: Container(
-                      alignment: Alignment.center,
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF2BEA1),
-                        shape: BoxShape.circle,
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'UET APP',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30),
                       ),
-                      child: IconButton(
-                          onPressed: () {
-                            print('press');
-                          },
-                          icon: SvgPicture.asset("assets/icons/menu.svg"))),
+                    )),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                      onTap: () {
+                        CustomAlertDialog.showConfirmAlertDialog(context,
+                            () async {
+                          SharedPreferences pref =
+                              await SharedPreferences.getInstance();
+                          await pref.clear();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return LoginScreen();
+                              },
+                            ),
+                          );
+                        });
+                      },
+                      child: Text('Thoát')),
                 ),
                 Expanded(child: NewsScreen()),
               ],
