@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uet_app/Screens/Home/home_screen.dart';
 import 'package:uet_app/Screens/Login/login_sreen.dart';
-import 'package:uet_app/constants.dart';
+import 'package:uet_app/configs/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'UET APP',
       theme: ThemeData(
+        fontFamily: "Cairo",
+        textTheme:
+            Theme.of(context).textTheme.apply(displayColor: kPrimaryColor),
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
         visualDensity: VisualDensity.adaptivePlatformDensity,

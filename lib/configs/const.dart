@@ -1,0 +1,1 @@
+const HOMESCREENSTATE = {'NEWS': 1, 'GRADES': 2, 'SETTINGS': 3};
